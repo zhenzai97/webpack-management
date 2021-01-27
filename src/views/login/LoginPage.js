@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Form, Icon, Input} from 'antd';
+import Axios from '../../utils/ajaxUtil';
 import imge_3 from '@/images/login/3.jpg';
 import imge_4 from '@/images/login/4.jpg';
 import imge_5 from '@/images/login/5.jpg';
@@ -8,17 +9,45 @@ import imge_6 from '@/images/login/6.jpg';
 const FormItem = Form.Item;
 let tempIndex = 1;
 
-import Axios from '../../utils/ajaxUtil';
 class LoginPage extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
             imgIndex: 0,
-        }
+            pic: [
+                {id: 1, key: 1, src: imge_3},
+                {id: 2, key: 2, src: imge_4},
+                {id: 3, key: 3, src: imge_5},
+                {id: 4, key: 4, src: imge_6}
+            ]
+        };
+        this.dragStart = this.dragStart.bind(this);
+        this.allowDrop = this.allowDrop.bind(this);
+        this.drop = this.drop.bind(this);
+
+        //  移动的图片的index
+        this.movedPicIndex = -1;
+        //  移入的区域的index
+        this.movedInIndex = -1;
     }
 
-    handleSubmit() {
+    //https://segmentfault.com/q/1010000019565763
+    componentDidMount() {
 
+    }
+
+    // dragStart(el) {
+    //     // this.className += ' dragging';
+    //     // setTimeout(() => {
+    //     //     this.className = 'invisible';
+    //     // }, 0);
+    //     console.log("el", el)
+    //
+    // }
+
+
+    handleSubmit() {
         let data = {userAccount: 'admin', userPassword: 'a123456'}
         // Axios({
         //     url: '/api/user/demo',
@@ -54,12 +83,35 @@ class LoginPage extends Component {
         } else {
             tempIndex = 1
         }
-        this.setState({imgIndex:index})
+        this.setState({imgIndex: index})
         document.getElementById('slider').src = imgSrc
     }
 
+    allowDrop(e) {
+        e.preventDefault();
+    }
+
+    drop(index, e) {
+        e.preventDefault();
+        this.movedInIndex = index;
+        const picData = this.swapPic(this.movedPicIndex, this.movedInIndex);
+        this.setState({
+            pic: picData
+        });
+    }
+
+    dragStart(index, e) {
+        this.movedPicIndex = index;
+    }
+
+    swapPic(fromIndex, toIndex) {
+        let picData = [...this.state.pic];
+        [picData[fromIndex], picData[toIndex]] = [picData[toIndex], picData[fromIndex]];
+        return picData;
+    }
+
     render() {
-        const {imgIndex} = this.state;
+        const {imgIndex, pic} = this.state;
         const formItemLayout = {
             labelCol: {
                 xs: {span: 8},
@@ -76,12 +128,20 @@ class LoginPage extends Component {
             <section className='login-contains'>
                 <img src={imge_3} align="" id="slider"/>
                 <ul className="navigation">
-                    <li><img onClick={() => this.imgSlider(imge_3, 1)} src={imge_3} align=""/></li>
-                    <li><img onClick={() => this.imgSlider(imge_4)} src={imge_4} align=""/></li>
-                    <li><img onClick={() => this.imgSlider(imge_5)} src={imge_5} align=""/></li>
-                    <li><img onClick={() => this.imgSlider(imge_6)} src={imge_6} align=""/></li>
+                    {pic.map((item, index) => {
+                        return (
+                            <li
+                                draggable={true}
+                                onDragStart={e => this.dragStart(index, e)}
+                                onDragOver={this.allowDrop}
+                                onDrop={e => this.drop(index, e)}
+                                key={item.key}>
+                                <img src={item.src} onClick={() => this.imgSlider(item.src, index === 0 ? 1 : "")}/>
+                            </li>
+                        )
+                    })}
                 </ul>
-                {imgIndex === 1 && (<div className='login-contains-page'>
+                {imgIndex === 10 && (<div className='login-contains-page'>
                     <div className="login-contains-page-dialog">
                         <Form {...formItemLayout} >
                             <FormItem label="手机号码">
