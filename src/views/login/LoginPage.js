@@ -34,7 +34,7 @@ class LoginPage extends Component {
 
     //https://segmentfault.com/q/1010000019565763
     componentDidMount() {
-
+        console.log("提交测试")
     }
 
     // dragStart(el) {
