@@ -14,7 +14,7 @@ export const formatUrl = obj => {
  */
 export function generateTitle(title) {
   // if (hasKey) {
-  //   // $t :this method from vue-i18n, inject in @/lang/index.js
+  //   // $t :this method from vue-i18n, inject in @/lang/Demo1.js
   //   const translatedTitle = this.$t('route.' + title)
 
   //   return translatedTitle

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import DemoIndex from '@/views/middleContent/Demo1'
+import DemoHook from '@/views/middleContent/DemoHook'
 
 class AdminPage extends Component {
     render() {
@@ -12,7 +13,8 @@ class AdminPage extends Component {
                     左侧菜单
                 </div>
                 <div className='admin-center-page'>
-                    中1部
+                    <DemoIndex/>
+                    <DemoHook/>
                 </div>
             </div>
         );
