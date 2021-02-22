@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import DemoIndex from '@/views/middleContent/Demo1'
 import DemoHook from '@/views/middleContent/DemoHook'
-
+import App from '@/views/middleContent/App'
 class AdminPage extends Component {
     render() {
         return (
@@ -15,6 +15,7 @@ class AdminPage extends Component {
                 <div className='admin-center-page'>
                     <DemoIndex/>
                     <DemoHook/>
+                    <App/>
                 </div>
             </div>
         );

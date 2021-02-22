@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 
 class Demo1 extends Component {
     render() {
         return (
             <div>
-                中173部
+                中167111部
             </div>
         );
     }
