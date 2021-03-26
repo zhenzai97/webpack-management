@@ -3,7 +3,7 @@
   width: 100%;
   display: flex;
   padding-top: 50px;
-  padding-left: 80px;
+  padding-left: 160px;
   min-width: 1080px;
 
   .admin-header {
@@ -23,9 +23,10 @@
     background-position: center;
     background-repeat: no-repeat;
   }
+
   .admin-menu-root {
-    width: 80px;
-    min-width: 80px;
+    width: 160px;
+    min-width: 160px;
     height: 100%;
     background-color: #001529;
     padding: 20px 0 43px;
@@ -35,10 +36,53 @@
     left: -1px;
     display: flex;
     flex-direction: column;
+
+    .ant-menu-light {
+      color: #fff;
+      background: #001529;
+      border-right: 1px solid #001529;
+
+      .ant-menu-sub {
+        color: #fff;
+        background: #001529;
+      }
+    }
   }
 
   .admin-center-page {
     flex: 1;
     overflow: hidden;
+
+
+    .ant-tabs-top {
+      margin-top: 15px;
+
+      .ant-tabs-bar {
+        margin: 0;
+      }
+
+      .ant-tabs-nav-container {
+        height: 32px;
+      }
+
+      .ant-tabs-tab {
+        height: 32px;
+        line-height: 32px;
+
+        &:nth-of-type(1) {
+          margin-left: 5px;
+        }
+      }
+    }
+
+    .tab-contains {
+      .tab-contains-name {
+
+      }
+
+      .tab-contains-icon {
+        margin-left: 10px;
+      }
+    }
   }
 }
