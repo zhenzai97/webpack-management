@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Icon, Menu, Tabs} from "antd";
-
+import getComponent from "../../componentMapping"
 const {SubMenu} = Menu;
 const {TabPane} = Tabs;
 
@@ -13,7 +13,7 @@ class AdminPage extends Component {
         this.state = {
             menuList: [
                 {
-                    key: 1, icon: '', menuName: "文章管理", uuid: '13323',
+                    key: 1, icon: '', menuName: "书籍管理", uuid: '13323',
                     children: [
                         {key: 112, icon: '', menuName: "文章管理1", uuid: '13323', keyPath: '/'},
                         {key: 13, icon: '', menuName: "文章管理2", uuid: '13323', keyPath: '/'},
@@ -29,9 +29,9 @@ class AdminPage extends Component {
                     ]
                 },
                 {
-                    key: 3, icon: '', menuName: "每日一练", uuid: '14323',
+                    key: 3, icon: '', menuName: "工具管理", uuid: '14323',
                     children: [
-                        {key: 32, icon: '', menuName: "每日一练7", uuid: '13323', keyPath: '/'},
+                        {key: 32, icon: '', menuName: "扫码选材", uuid: '13323', keyPath: '/toolCabinet/material/MaterialPage'},
                         {key: 33, icon: '', menuName: "每日一练8", uuid: '13323', keyPath: '/'},
                         {key: 34, icon: '', menuName: "每日一练9", uuid: '13323', keyPath: '/'}
                     ]
@@ -73,11 +73,14 @@ class AdminPage extends Component {
         this.setState({activeKey: e});
     }
 
-    tabClose(event, key) {
+    tabClose(event, key, index) {
         event && event.preventDefault();
         event && event.stopPropagation();
         let tempList = this.state.panes.filter(el => el.key !== key)
-        this.setState({panes: tempList})
+        this.setState({
+            activeKey: tempList[tempList.length - 1].key + '',
+            panes: tempList
+        })
     }
 
 
@@ -88,12 +91,12 @@ class AdminPage extends Component {
                     {pane.title}
                 </span>
                 <span className='tab-contains-icon'>
-                    {index !== 0 && <Icon type="close" onClick={(e) => this.tabClose(e, pane.key)}/>}
+                    {index !== 0 && <Icon type="close" onClick={(e) => this.tabClose(e, pane.key, index)}/>}
                 </span>
             </div>
             return (
                 <TabPane tab={tab} key={pane.key}>
-                    {pane.content}
+                    {getComponent(pane.keyPath)}
                 </TabPane>
             )
         })
@@ -110,7 +113,8 @@ class AdminPage extends Component {
                         onClick={(item) => this.handleClick(item)}
                         style={{width: 160}}
                         defaultSelectedKeys={['1']}
-                        defaultOpenKeys={['sub1']}
+                        defaultOpenKeys={['3']}
+                        selectedKeys={['32']}
                         mode="inline"
                     >
 
